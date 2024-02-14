@@ -5,6 +5,9 @@ import com.ideate.ideaapiserver.dto.member.ResourceDto;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "RESOURCES")
 @Getter
@@ -24,6 +27,9 @@ public class Resource {
     private String originalName;
 
     private String fakeName;
+
+    @OneToOne(mappedBy = "resource", fetch = FetchType.LAZY)
+    private Member member;
 
     public static Resource create(ResourceDto dto) {
         return Resource.builder()
