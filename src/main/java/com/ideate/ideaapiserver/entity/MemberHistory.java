@@ -33,8 +33,8 @@ public class MemberHistory {
 
     private String mdn;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private Resource resource;
+//    @OneToOne(fetch = FetchType.LAZY)
+//    private Resource resource;
 
     @Enumerated(EnumType.STRING)
     private HistoryType historyType;
@@ -47,7 +47,7 @@ public class MemberHistory {
                 .nickname(member.getNickname())
                 .birthday(member.getBirthday())
                 .mdn(member.getMdn())
-                .resource(member.getResource())
+//                .resource(member.getResource())
                 .historyType(historyType)
             .build();
     }
