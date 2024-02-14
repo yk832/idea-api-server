@@ -24,5 +24,7 @@ spring:
 upload :
   dir : C:/DEV/upload
 
-logging.level:
-  org.hibernate.SQL: debug
+logging:
+  level:
+    root: info
+    org.hibernate.SQL: debug
