@@ -10,7 +10,7 @@ import org.springframework.util.StringUtils;
 @Entity
 @Table(name = "MEMBERS")
 @Getter
-@ToString
+@ToString(exclude = "resource")
 @AllArgsConstructor
 @Builder(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -34,7 +34,7 @@ public class Member {
 
     private String mdn;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
     private Resource resource;
 
     public static Member create(MemberDto.Create request, Resource resource) {
@@ -75,6 +75,10 @@ public class Member {
         this.mdn = request.getMdn();
         this.password = new SHA256().encrypt(request.getPassword());
         this.name = request.getName();
+    }
+
+    public void deleteResource() {
+        this.resource = null;
     }
 }
 

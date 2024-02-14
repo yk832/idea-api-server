@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Table(name = "RESOURCES")
 @Getter
-@ToString
+@ToString(exclude = "member")
 @AllArgsConstructor
 @Builder(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

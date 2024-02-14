@@ -32,31 +32,29 @@ public class ResourceController {
 
     private final ResourceService resourceService;
 
-
     @GetMapping("/api/resources")
     public ResponseEntity<?> findAll() {
         return ResponseEntity.ok("");
     }
 
-//    @GetMapping("/api/members/{id}")
-//    public ResponseEntity<MemberDto.Response> findById(@PathVariable Long id) {
-//        return ResponseEntity.ok(memberService.findById(id));
-//    }
-//
-//    @PostMapping("/api/members")
-//    public ResponseEntity<Long> createMember(@RequestPart(required = false) MultipartFile image, @RequestPart @Valid MemberDto.Create request) {
-//        return ResponseEntity.ok(memberService.create(image, request));
-//    }
-//
-//    @PutMapping("/api/members/{id}")
-//    public ResponseEntity<Long> updateMember(@PathVariable Long id,
-//               @RequestPart(required = false) MultipartFile image, @RequestPart @Valid MemberDto.Update request) {
-//        return ResponseEntity.ok(memberService.update(id, image, request));
-//    }
-//
+    @GetMapping("/api/resources/{id}")
+    public ResponseEntity<?> findById(@PathVariable Long id) {
+        return ResponseEntity.ok("");
+    }
+
+    @PostMapping("/api/resources")
+    public ResponseEntity<?> createResource(@RequestPart MultipartFile image) {
+        return ResponseEntity.ok("");
+    }
+
+    @PutMapping("/api/resources/{id}")
+    public ResponseEntity<?> updateResource(@PathVariable Long id, @RequestPart MultipartFile image) {
+        return ResponseEntity.ok("");
+    }
+
     @DeleteMapping("/api/resources/{id}")
     public ResponseEntity<Long> deleteResource(@PathVariable Long id) {
-        return ResponseEntity.ok(1L);
+        return ResponseEntity.ok(resourceService.delete(id));
     }
 
 
