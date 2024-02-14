@@ -21,5 +21,8 @@ spring:
         show_sql: true
         format_sql: true
 
+upload :
+  dir : C:/DEV/upload
+
 logging.level:
   org.hibernate.SQL: debug
