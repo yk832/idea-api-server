@@ -38,5 +38,11 @@ public class Resource {
                 .fakeName(dto.getFakeName())
             .build();
     }
+
+    public void update(ResourceDto dto) {
+        this.path = dto.getPath();
+        this.originalName = dto.getOriginalName();
+        this.fakeName = dto.getFakeName();
+    }
 }
 

@@ -2,6 +2,7 @@ package com.ideate.ideaapiserver.controller;
 
 
 import com.ideate.ideaapiserver.dto.member.MemberDto;
+import com.ideate.ideaapiserver.dto.member.ResourceDto;
 import com.ideate.ideaapiserver.service.MemberService;
 import com.ideate.ideaapiserver.service.ResourceService;
 import jakarta.validation.Valid;
@@ -33,22 +34,23 @@ public class ResourceController {
     private final ResourceService resourceService;
 
     @GetMapping("/api/resources")
-    public ResponseEntity<?> findAll() {
-        return ResponseEntity.ok("");
+    public ResponseEntity<List<ResourceDto>> findAll() {
+        return ResponseEntity.ok(resourceService.findAll());
     }
 
     @GetMapping("/api/resources/{id}")
-    public ResponseEntity<?> findById(@PathVariable Long id) {
-        return ResponseEntity.ok("");
+    public ResponseEntity<ResourceDto> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(resourceService.findById(id));
     }
 
     @PostMapping("/api/resources")
-    public ResponseEntity<?> createResource(@RequestPart MultipartFile image) {
-        return ResponseEntity.ok("");
+    public ResponseEntity<Long> createResource(@RequestPart MultipartFile image) {
+        return ResponseEntity.ok(resourceService.save(image));
     }
 
     @PutMapping("/api/resources/{id}")
     public ResponseEntity<?> updateResource(@PathVariable Long id, @RequestPart MultipartFile image) {
+        resourceService.update(id, image);
         return ResponseEntity.ok("");
     }
 
