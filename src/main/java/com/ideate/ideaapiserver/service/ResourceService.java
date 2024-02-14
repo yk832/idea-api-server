@@ -8,11 +8,8 @@ import com.ideate.ideaapiserver.handler.GlobalException;
 import com.ideate.ideaapiserver.repository.ResourceRepository;
 import com.ideate.ideaapiserver.util.GlobalUtils;
 import com.ideate.ideaapiserver.util.ResourceProperties;
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,7 +45,7 @@ public class ResourceService {
 
     @Transactional
     public Long save(MultipartFile image) {
-        ResourceDto resourceDto = uploadResource(image);
+        ResourceDto resourceDto = uploadImgFile(image);
         Resource saveResource = resourceRepository.save(Resource.create(resourceDto));
         return saveResource.getId();
     }
@@ -58,9 +55,9 @@ public class ResourceService {
         Resource resource = resourceRepository.findById(id)
                 .orElseThrow(()-> new GlobalException(ErrorCode.NOT_FOUND_RESOURCE));
 
-        deleteFile(resource.getPath() + resource.getFakeName() + resource.getOriginalName());
+        deleteImgFile(resource.getPath() + resource.getFakeName() + resource.getOriginalName());
 
-        ResourceDto resourceDto = uploadResource(image);
+        ResourceDto resourceDto = uploadImgFile(image);
 
         resource.update(resourceDto);
 
@@ -73,7 +70,7 @@ public class ResourceService {
         Resource resource = resourceRepository.findById(id)
                 .orElseThrow(()-> new GlobalException(ErrorCode.NOT_FOUND_RESOURCE));
 
-        deleteFile(resource.getPath() + resource.getFakeName() + resource.getOriginalName());
+        deleteImgFile(resource.getPath() + resource.getFakeName() + resource.getOriginalName());
 
         Optional.ofNullable(resource.getMember())
                 .ifPresentOrElse(Member::deleteResource, ()-> resourceRepository.delete(resource));
@@ -81,7 +78,7 @@ public class ResourceService {
         return resource.getId();
     }
 
-    public ResourceDto uploadResource(MultipartFile file) {
+    public ResourceDto uploadImgFile(MultipartFile file) {
         try {
 
             File directory = new File(resourceProperties.getDir());
@@ -107,7 +104,7 @@ public class ResourceService {
         }
     }
 
-    public void deleteFile(String filePath) {
+    public void deleteImgFile(String filePath) {
         try {
             File file = new File(filePath);
 

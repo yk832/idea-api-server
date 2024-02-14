@@ -79,7 +79,7 @@ public class MemberService {
     }
 
     private Resource getResource(MultipartFile image) {
-        ResourceDto resourceDto = resourceService.uploadResource(image);
+        ResourceDto resourceDto = resourceService.uploadImgFile(image);
         return Resource.create(resourceDto);
     }
 
