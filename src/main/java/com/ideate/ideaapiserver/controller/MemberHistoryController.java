@@ -2,6 +2,8 @@ package com.ideate.ideaapiserver.controller;
 
 
 import com.ideate.ideaapiserver.dto.member.MemberDto;
+import com.ideate.ideaapiserver.dto.member.MemberHistoryDto;
+import com.ideate.ideaapiserver.service.MemberHistoryService;
 import com.ideate.ideaapiserver.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -29,15 +31,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberHistoryController {
 
+    private final MemberHistoryService memberHistoryService;
 
     @GetMapping("/api/histories/member")
-    public ResponseEntity<?> findAll() {
-        return ResponseEntity.ok("");
+    public ResponseEntity<List<MemberHistoryDto>> findAll() {
+        return ResponseEntity.ok(memberHistoryService.findAll());
     }
 
     @GetMapping("/api/histories/member/{id}")
-    public ResponseEntity<?> findById(@PathVariable Long id) {
-        return ResponseEntity.ok("");
+    public ResponseEntity<MemberHistoryDto> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(memberHistoryService.findById(id));
     }
 
 }
