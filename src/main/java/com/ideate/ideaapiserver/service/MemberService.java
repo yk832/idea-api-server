@@ -77,7 +77,6 @@ public class MemberService {
                 .orElseThrow(() -> new GlobalException(ErrorCode.NOT_FOUND_MEMBER));
 
         memberRepository.delete(member);
-
     }
 
     private Resource getResource(MultipartFile image) {

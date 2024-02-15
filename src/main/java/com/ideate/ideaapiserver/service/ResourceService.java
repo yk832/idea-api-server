@@ -80,25 +80,11 @@ public class ResourceService {
 
     public ResourceDto uploadImgFile(MultipartFile file) {
         try {
+            createDirectory(resourceProperties.getDir());
 
-            File directory = new File(resourceProperties.getDir());
-            if (!directory.exists()) {
-                directory.mkdirs();
-            }
+            ResourceDto resourceDto = saveFile(file, resourceProperties.getUploadPath());
 
-            String uuid = GlobalUtils.makeUUID(16);
-            String absolutePath = resourceProperties.getUploadPath();
-            String fullPath = absolutePath + uuid + file.getOriginalFilename();
-
-            Path path = Paths.get(fullPath);
-            Files.write(path, file.getBytes());
-
-            return ResourceDto.builder()
-                    .fakeName(uuid)
-                    .originalName(file.getOriginalFilename())
-                    .path(absolutePath)
-                .build();
-
+            return resourceDto;
         } catch (IOException e) {
             throw new GlobalException(e, ErrorCode.FILE_UPLOAD_FAIL);
         }
@@ -115,4 +101,26 @@ public class ResourceService {
             throw new GlobalException(e, ErrorCode.FILE_DOWNLOAD_FAIL);
         }
     }
+
+    private void createDirectory(String directoryPath) throws IOException {
+        File directory = new File(directoryPath);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+    }
+
+    private ResourceDto saveFile(MultipartFile file, String uploadPath) throws IOException {
+        String uuid = GlobalUtils.makeUUID(16);
+        String fullPath = uploadPath + uuid + file.getOriginalFilename();
+
+        Path path = Paths.get(fullPath);
+        Files.write(path, file.getBytes());
+
+        return ResourceDto.builder()
+                .fakeName(uuid)
+                .originalName(file.getOriginalFilename())
+                .path(uploadPath)
+                .build();
+    }
+
 }
