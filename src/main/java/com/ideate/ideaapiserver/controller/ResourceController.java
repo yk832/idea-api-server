@@ -50,8 +50,7 @@ public class ResourceController {
 
     @PutMapping("/api/resources/{id}")
     public ResponseEntity<?> updateResource(@PathVariable Long id, @RequestPart MultipartFile image) {
-        resourceService.update(id, image);
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok(resourceService.update(id, image));
     }
 
     @DeleteMapping("/api/resources/{id}")
