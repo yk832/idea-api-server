@@ -1,6 +1,5 @@
 package com.ideate.ideaapiserver.config.constant;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -8,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ErrorCode {
     // TODO status, msg 정리
-    LOGIN_FAIL(401,"아이디/비밀번호가 틀렸습니다."),
+    PASSWORD_NOT_MATCH(401,"비밀번호가 틀렸습니다."),
     NOT_FOUND(404,"PAGE NOT FOUND"),
     NOT_FOUND_MEMBER(404,"존재하지 않는 고객"),
     INTERNAL_SERVER_ERROR(500,"서버에 장애가 발생하였습니다.\n관리자에게 문의해 주세요."),
