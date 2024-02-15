@@ -15,6 +15,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.Set;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -33,6 +37,8 @@ public class LoginService {
             throw new LoginFailException(ErrorCode.PASSWORD_NOT_MATCH);
         }
 
+        validateMemberStatus(member);
+
         memberHistoryRepository.save(MemberHistory.create(member, HistoryType.LOGIN));
 
         Long count = memberHistoryRepository.getLoginSuccessCount(member.getUid(), HistoryType.LOGIN);
@@ -41,6 +47,16 @@ public class LoginService {
         }
 
         return member.getId();
+    }
+
+    private static void validateMemberStatus(Member member) {
+        if (member.getMemberStatus().equals(MemberStatus.DELETED)) {
+            throw new LoginFailException(ErrorCode.NOT_FOUND_MEMBER);
+        }
+
+        if (member.getMemberStatus().equals(MemberStatus.INACTIVE)) {
+            throw new LoginFailException(ErrorCode.DISABLED_MEMBER);
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 package com.ideate.ideaapiserver.entity;
 
 import com.ideate.ideaapiserver.config.constant.HistoryType;
+import com.ideate.ideaapiserver.config.constant.MemberStatus;
 import com.ideate.ideaapiserver.util.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -43,6 +44,9 @@ public class MemberHistory extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private HistoryType historyType;
 
+    @Enumerated(EnumType.STRING)
+    private MemberStatus memberStatus;
+
     public static MemberHistory create(Member member, HistoryType historyType) {
         Resource resource = member.getResource();
         return MemberHistory.builder()
@@ -56,6 +60,7 @@ public class MemberHistory extends BaseTimeEntity {
                 .fakeImgName(Objects.nonNull(resource) ? resource.getFakeName() : null)
                 .originalImgName(Objects.nonNull(resource) ? resource.getOriginalName() : null)
                 .historyType(historyType)
+                .memberStatus(member.getMemberStatus())
             .build();
     }
 }
