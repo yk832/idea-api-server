@@ -1,4 +1,4 @@
-package com.ideate.ideaapiserver.config;
+package com.ideate.ideaapiserver.config.constant;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

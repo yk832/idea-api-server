@@ -1,4 +1,4 @@
-package com.ideate.ideaapiserver.config;
+package com.ideate.ideaapiserver.config.constant;
 
 public enum HistoryType {
     CREATE,

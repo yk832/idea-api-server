@@ -1,6 +1,6 @@
 package com.ideate.ideaapiserver.util;
 
-import com.ideate.ideaapiserver.config.ErrorCode;
+import com.ideate.ideaapiserver.config.constant.ErrorCode;
 import com.ideate.ideaapiserver.handler.GlobalException;
 
 import java.security.MessageDigest;

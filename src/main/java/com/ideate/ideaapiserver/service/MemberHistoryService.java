@@ -1,6 +1,6 @@
 package com.ideate.ideaapiserver.service;
 
-import com.ideate.ideaapiserver.config.ErrorCode;
+import com.ideate.ideaapiserver.config.constant.ErrorCode;
 import com.ideate.ideaapiserver.dto.memberhistory.MemberHistoryDto;
 import com.ideate.ideaapiserver.handler.GlobalException;
 import com.ideate.ideaapiserver.repository.MemberHistoryRepository;

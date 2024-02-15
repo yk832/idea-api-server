@@ -1,6 +1,6 @@
 package com.ideate.ideaapiserver.dto.memberhistory;
 
-import com.ideate.ideaapiserver.config.HistoryType;
+import com.ideate.ideaapiserver.config.constant.HistoryType;
 import com.ideate.ideaapiserver.entity.MemberHistory;
 import lombok.*;
 

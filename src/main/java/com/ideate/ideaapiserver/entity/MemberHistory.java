@@ -1,15 +1,11 @@
 package com.ideate.ideaapiserver.entity;
 
-import com.ideate.ideaapiserver.config.HistoryType;
-import com.ideate.ideaapiserver.config.MemberEntityListener;
-import com.ideate.ideaapiserver.dto.member.MemberDto;
+import com.ideate.ideaapiserver.config.constant.HistoryType;
 import com.ideate.ideaapiserver.util.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.util.StringUtils;
 
 import java.util.Objects;
-import java.util.Optional;
 
 @Entity
 @Table(name = "MEMBER_HISTORYS")

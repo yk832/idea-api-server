@@ -1,8 +1,7 @@
 package com.ideate.ideaapiserver.handler;
 
-import com.ideate.ideaapiserver.config.ErrorCode;
+import com.ideate.ideaapiserver.config.constant.ErrorCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 

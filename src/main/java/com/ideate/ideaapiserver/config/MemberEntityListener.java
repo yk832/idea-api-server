@@ -1,5 +1,6 @@
 package com.ideate.ideaapiserver.config;
 
+import com.ideate.ideaapiserver.config.constant.HistoryType;
 import com.ideate.ideaapiserver.entity.Member;
 import com.ideate.ideaapiserver.entity.MemberHistory;
 import com.ideate.ideaapiserver.repository.MemberHistoryRepository;

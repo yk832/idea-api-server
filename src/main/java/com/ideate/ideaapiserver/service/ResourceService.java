@@ -1,6 +1,6 @@
 package com.ideate.ideaapiserver.service;
 
-import com.ideate.ideaapiserver.config.ErrorCode;
+import com.ideate.ideaapiserver.config.constant.ErrorCode;
 import com.ideate.ideaapiserver.dto.resource.ResourceDto;
 import com.ideate.ideaapiserver.entity.Member;
 import com.ideate.ideaapiserver.entity.Resource;
