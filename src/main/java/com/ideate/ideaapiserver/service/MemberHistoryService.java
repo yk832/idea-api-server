@@ -23,6 +23,7 @@ public class MemberHistoryService {
     public List<MemberHistoryDto> findAll() {
         return memberHistoryRepository.findAll().stream()
                 .map(MemberHistoryDto::of)
+                .sorted(Comparator.comparing(MemberHistoryDto::getId).reversed())
             .collect(Collectors.toList());
     }
 
