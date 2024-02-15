@@ -56,30 +56,28 @@ public class MemberService {
     }
 
     @Transactional
-    public Long update(Long id, MultipartFile image, MemberDto.Update request) {
+    public void update(Long id, MultipartFile image, MemberDto.Update request) {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new GlobalException(ErrorCode.NOT_FOUND_MEMBER));
 
         if (Objects.isNull(image)) {
             member.update(request);
-            return id;
+            return;
         }
 
         Resource resource = getResource(image);
 
         member.update(request, resource);
 
-        return id;
     }
 
     @Transactional
-    public Long delete(Long id) {
+    public void delete(Long id) {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new GlobalException(ErrorCode.NOT_FOUND_MEMBER));
 
         memberRepository.delete(member);
 
-        return member.getId();
     }
 
     private Resource getResource(MultipartFile image) {

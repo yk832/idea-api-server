@@ -1,6 +1,7 @@
 package com.ideate.ideaapiserver.controller;
 
 
+import com.ideate.ideaapiserver.dto.common.CommonResponse;
 import com.ideate.ideaapiserver.dto.member.MemberDto;
 import com.ideate.ideaapiserver.handler.GlobalException;
 import com.ideate.ideaapiserver.service.MemberService;
@@ -49,18 +50,22 @@ public class MemberController {
     }
 
     @PostMapping("/api/members")
-    public ResponseEntity<Long> createMember(@RequestPart(required = false) MultipartFile image, @RequestPart @Valid MemberDto.Create request) {
-        return ResponseEntity.ok(memberService.create(image, request));
+    public ResponseEntity<CommonResponse> createMember(@RequestPart(required = false) MultipartFile image, @RequestPart @Valid MemberDto.Create request) {
+        Long id = memberService.create(image, request);
+        return ResponseEntity.ok(new CommonResponse(id));
     }
 
     @PutMapping("/api/members/{id}")
-    public ResponseEntity<Long> updateMember(@PathVariable Long id,
+    public ResponseEntity<CommonResponse> updateMember(@PathVariable Long id,
                @RequestPart(required = false) MultipartFile image, @RequestPart @Valid MemberDto.Update request) {
-        return ResponseEntity.ok(memberService.update(id, image, request));
+        // TODO parameter code convention
+        memberService.update(id, image, request);
+        return ResponseEntity.ok(new CommonResponse(id));
     }
 
     @DeleteMapping("/api/members/{id}")
-    public ResponseEntity<Long> deleteMember(@PathVariable Long id) {
-        return ResponseEntity.ok(memberService.delete(id));
+    public ResponseEntity<CommonResponse> deleteMember(@PathVariable Long id) {
+        memberService.delete(id);
+        return ResponseEntity.ok(new CommonResponse(id));
     }
 }

@@ -1,6 +1,7 @@
 package com.ideate.ideaapiserver.controller;
 
 
+import com.ideate.ideaapiserver.dto.common.CommonResponse;
 import com.ideate.ideaapiserver.dto.member.MemberDto;
 import com.ideate.ideaapiserver.dto.member.ResourceDto;
 import com.ideate.ideaapiserver.service.MemberService;
@@ -44,18 +45,21 @@ public class ResourceController {
     }
 
     @PostMapping("/api/resources")
-    public ResponseEntity<Long> createResource(@RequestPart MultipartFile image) {
-        return ResponseEntity.ok(resourceService.save(image));
+    public ResponseEntity<CommonResponse> createResource(@RequestPart MultipartFile image) {
+        Long id = resourceService.save(image);
+        return ResponseEntity.ok(new CommonResponse(id));
     }
 
     @PutMapping("/api/resources/{id}")
-    public ResponseEntity<?> updateResource(@PathVariable Long id, @RequestPart MultipartFile image) {
-        return ResponseEntity.ok(resourceService.update(id, image));
+    public ResponseEntity<CommonResponse> updateResource(@PathVariable Long id, @RequestPart MultipartFile image) {
+        resourceService.update(id, image);
+        return ResponseEntity.ok(new CommonResponse(id));
     }
 
     @DeleteMapping("/api/resources/{id}")
-    public ResponseEntity<Long> deleteResource(@PathVariable Long id) {
-        return ResponseEntity.ok(resourceService.delete(id));
+    public ResponseEntity<CommonResponse> deleteResource(@PathVariable Long id) {
+        resourceService.delete(id);
+        return ResponseEntity.ok(new CommonResponse(id));
     }
 
 
