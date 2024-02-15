@@ -100,7 +100,7 @@ public class ResourceService {
                 .build();
 
         } catch (IOException e) {
-            throw new GlobalException(e, ErrorCode.INTERNAL_SERVER_ERROR);
+            throw new GlobalException(e, ErrorCode.FILE_UPLOAD_FAIL);
         }
     }
 
@@ -112,7 +112,7 @@ public class ResourceService {
                 file.delete();
             }
         } catch (Exception e) {
-            throw new GlobalException(e, ErrorCode.INTERNAL_SERVER_ERROR);
+            throw new GlobalException(e, ErrorCode.FILE_DOWNLOAD_FAIL);
         }
     }
 }
