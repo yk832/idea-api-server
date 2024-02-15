@@ -16,11 +16,11 @@ public class BaseTimeEntity {
 
     @CreatedDate
     @Column(updatable = false)
-    private String createdAt;
+    private LocalDateTime createdAt;
 
     @PrePersist
     public void onPrePersist() {
-        this.createdAt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        this.createdAt = LocalDateTime.now();
     }
 
 }
