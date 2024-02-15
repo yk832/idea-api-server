@@ -1,4 +1,4 @@
-package com.ideate.ideaapiserver.dto.member;
+package com.ideate.ideaapiserver.dto.resource;
 
 import com.ideate.ideaapiserver.entity.Resource;
 import lombok.*;

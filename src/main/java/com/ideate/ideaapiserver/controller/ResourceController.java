@@ -2,11 +2,8 @@ package com.ideate.ideaapiserver.controller;
 
 
 import com.ideate.ideaapiserver.dto.common.CommonResponse;
-import com.ideate.ideaapiserver.dto.member.MemberDto;
-import com.ideate.ideaapiserver.dto.member.ResourceDto;
-import com.ideate.ideaapiserver.service.MemberService;
+import com.ideate.ideaapiserver.dto.resource.ResourceDto;
 import com.ideate.ideaapiserver.service.ResourceService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

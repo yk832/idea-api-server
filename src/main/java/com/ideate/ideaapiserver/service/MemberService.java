@@ -2,7 +2,7 @@ package com.ideate.ideaapiserver.service;
 
 import com.ideate.ideaapiserver.config.ErrorCode;
 import com.ideate.ideaapiserver.dto.member.MemberDto;
-import com.ideate.ideaapiserver.dto.member.ResourceDto;
+import com.ideate.ideaapiserver.dto.resource.ResourceDto;
 import com.ideate.ideaapiserver.entity.Member;
 import com.ideate.ideaapiserver.entity.Resource;
 import com.ideate.ideaapiserver.handler.GlobalException;

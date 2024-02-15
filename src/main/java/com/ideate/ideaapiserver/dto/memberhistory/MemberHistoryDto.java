@@ -1,10 +1,7 @@
-package com.ideate.ideaapiserver.dto.member;
+package com.ideate.ideaapiserver.dto.memberhistory;
 
 import com.ideate.ideaapiserver.config.HistoryType;
 import com.ideate.ideaapiserver.entity.MemberHistory;
-import com.ideate.ideaapiserver.entity.Resource;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.*;
 
 @Getter

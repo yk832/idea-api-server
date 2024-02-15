@@ -1,8 +1,7 @@
 package com.ideate.ideaapiserver.service;
 
 import com.ideate.ideaapiserver.config.ErrorCode;
-import com.ideate.ideaapiserver.dto.member.MemberHistoryDto;
-import com.ideate.ideaapiserver.entity.MemberHistory;
+import com.ideate.ideaapiserver.dto.memberhistory.MemberHistoryDto;
 import com.ideate.ideaapiserver.handler.GlobalException;
 import com.ideate.ideaapiserver.repository.MemberHistoryRepository;
 import lombok.RequiredArgsConstructor;

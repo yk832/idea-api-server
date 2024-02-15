@@ -1,12 +1,9 @@
 package com.ideate.ideaapiserver.entity;
 
 
-import com.ideate.ideaapiserver.dto.member.ResourceDto;
+import com.ideate.ideaapiserver.dto.resource.ResourceDto;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "RESOURCES")
