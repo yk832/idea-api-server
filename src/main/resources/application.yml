@@ -8,6 +8,9 @@ server:
       charset: ${file.encoding}
 
 spring:
+  web:
+    resources:
+      add-mappings: false
   datasource:
     url: jdbc:h2:tcp://localhost/~/test
     username: sa
@@ -18,7 +21,7 @@ spring:
       ddl-auto: create-drop
     properties:
       hibernate:
-        show_sql: true
+#        show_sql: true
         format_sql: true
 
 upload :
