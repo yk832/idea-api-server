@@ -74,8 +74,12 @@ public class MemberService {
 
     @Transactional
     public Long delete(Long id) {
-        memberRepository.deleteById(id);
-        return id;
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new GlobalException(ErrorCode.NOT_FOUND_MEMBER));
+
+        memberRepository.delete(member);
+
+        return member.getId();
     }
 
     private Resource getResource(MultipartFile image) {
