@@ -27,5 +27,12 @@ public class SHA256 {
         return builder.toString();
     }
 
+    public static Boolean validatePassword(String loginPwd, String encryptPwd)
+    {
+        SHA256 sha256 = new SHA256();
+        String cryptogram = sha256.encrypt(loginPwd);
+        return cryptogram.equals(encryptPwd);
+    }
+
 
 }

@@ -1,6 +1,7 @@
 package com.ideate.ideaapiserver.entity;
 
 import com.ideate.ideaapiserver.config.MemberEntityListener;
+import com.ideate.ideaapiserver.config.constant.HistoryType;
 import com.ideate.ideaapiserver.config.constant.MemberStatus;
 import com.ideate.ideaapiserver.dto.member.MemberDto;
 import com.ideate.ideaapiserver.util.SHA256;
@@ -80,6 +81,10 @@ public class Member {
 
     public void deleteResource() {
         this.resource = null;
+    }
+
+    public void updateStatus(MemberStatus status) {
+        this.memberStatus = status;
     }
 
     private static String setNickname(MemberDto.Create request) {

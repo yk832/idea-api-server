@@ -11,4 +11,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Override
     @EntityGraph(attributePaths = {"resource"})
     Optional<Member> findById(Long id);
+
+    Optional<Member> findByUid(String userid);
+
 }
