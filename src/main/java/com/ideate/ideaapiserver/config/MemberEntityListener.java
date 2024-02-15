@@ -5,18 +5,30 @@ import com.ideate.ideaapiserver.entity.MemberHistory;
 import com.ideate.ideaapiserver.repository.MemberHistoryRepository;
 import com.ideate.ideaapiserver.util.BeanUtil;
 import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreRemove;
 import jakarta.persistence.PreUpdate;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 
 @Slf4j
+@NoArgsConstructor
 public class MemberEntityListener {
+
 
     @PreUpdate
     @PrePersist
-    public void prePersist(final Member member) {
+    public void prePersistAndUpdate(final Member member) {
+        saveMemberHistory(member, member.getId() == null ? HistoryType.CREATE : HistoryType.UPDATE);
+    }
+
+    @PreRemove
+    public void delete(final Member member) {
+        saveMemberHistory(member, HistoryType.DELETE);
+    }
+
+    private static void saveMemberHistory(Member member, HistoryType historyType) {
         MemberHistoryRepository memberHistoryRepository = BeanUtil.getBean(MemberHistoryRepository.class);
-        HistoryType historyType = member.getId() == null ? HistoryType.CREATE : HistoryType.UPDATE;
         MemberHistory memberHistory = MemberHistory.create(member, historyType);
         memberHistoryRepository.save(memberHistory);
     }
