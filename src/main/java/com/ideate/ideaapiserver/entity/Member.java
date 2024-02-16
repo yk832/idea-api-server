@@ -45,7 +45,7 @@ public class Member {
     public static Member create(MemberDto.Create request, Resource resource) {
         return Member.builder()
                 .uid(request.getUid())
-                .password(new SHA256().encrypt(request.getPassword()))
+                .password(SHA256.encrypt(request.getPassword()))
                 .name(request.getName())
                 .nickname(setNickname(request))
                 .birthday(request.getBirthday())
@@ -58,7 +58,7 @@ public class Member {
     public static Member create(MemberDto.Create request) {
         return Member.builder()
                 .uid(request.getUid())
-                .password(new SHA256().encrypt(request.getPassword()))
+                .password(SHA256.encrypt(request.getPassword()))
                 .name(request.getName())
                 .nickname(setNickname(request))
                 .birthday(request.getBirthday())
@@ -69,13 +69,13 @@ public class Member {
 
     public void update(MemberDto.Update request, Resource resource) {
         this.mdn = request.getMdn();
-        this.password = new SHA256().encrypt(request.getPassword());
+        this.password = SHA256.encrypt(request.getPassword());
         this.name = request.getName();
         this.resource = resource;
     }
     public void update(MemberDto.Update request) {
         this.mdn = request.getMdn();
-        this.password = new SHA256().encrypt(request.getPassword());
+        this.password = SHA256.encrypt(request.getPassword());
         this.name = request.getName();
     }
 
