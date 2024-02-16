@@ -7,6 +7,8 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.util.function.Function;
+
 public class MemberDto {
 
     @Getter
@@ -86,37 +88,38 @@ public class MemberDto {
                 .build();
         }
 
-        public static Response getUidAndNameAndMdn(Member member) {
+        public static Response getSensitiveData(Member member) {
             return Response.builder()
-                    .uid(maskUserid(member.getUid()))
-                    .name(maskName(member.getName()))
-                    .mdn(maskMdn(member.getMdn()))
+                    .uid(maskingSensitiveData(member.getUid(), Response::maskingUid))
+                    .name(maskingSensitiveData(member.getName(), Response::maskingName))
+                    .mdn(maskingSensitiveData(member.getMdn(), Response::maskingMdn))
                 .build();
         }
 
-        public static String maskUserid(String uid) {
-            String maskedChars = "*".repeat(8);
-            return uid.substring(0, uid.length() - 8) + maskedChars;
+        private static String maskingSensitiveData(String str, Function<String, String> maskingFunction) {
+            return maskingFunction.apply(str);
         }
 
-        public static String maskName(String name) {
-            StringBuilder maskedName = new StringBuilder(name);
-            if(name.length() > 1) {
-                for(int i = 1; i < Math.max(2, name.length() - 1); i++) {
+        private static String maskingMdn(String str) {
+            return str.substring(0, 3) + "*" +
+                    str.charAt(4) + "***" +
+                    str.substring(8);
+        }
+
+        private static String maskingName(String str) {
+            StringBuilder maskedName = new StringBuilder(str);
+            if(str.length() > 1) {
+                for(int i = 1; i < Math.max(2, str.length() - 1); i++) {
                     maskedName.setCharAt(i, '*');
                 }
             }
             return maskedName.toString();
         }
-    }
 
-    public static String maskMdn(String mdn) {
-        String firstPart = mdn.substring(0, 3) + "*";
-        String secondPart = mdn.charAt(4) + "***";
-        String thirdPart = mdn.substring(8);
-
-
-        return firstPart + secondPart + thirdPart;
+        private static String maskingUid(String str) {
+            String maskedChars = "*".repeat(8);
+            return str.substring(0, str.length() - 8) + maskedChars;
+        }
     }
 
 }

@@ -46,7 +46,7 @@ public class MemberService {
 
     public List<MemberDto.Response> findAll() {
         return memberRepository.findAll().stream()
-                .map(MemberDto.Response::getUidAndNameAndMdn)
+                .map(MemberDto.Response::getSensitiveData)
                 .toList();
     }
 
