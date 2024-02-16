@@ -12,10 +12,13 @@ spring:
     resources:
       add-mappings: false
   datasource:
-    url: jdbc:h2:tcp://localhost/~/test
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    url: jdbc:postgresql://localhost:5432/idea
+    username: postgres
+    password: ${postgres.password}
+  #    url: jdbc:h2:tcp://localhost/~/test
+#    username: sa
+#    password:
+#    driver-class-name: org.h2.Driver
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -23,9 +26,14 @@ spring:
       hibernate:
 #        show_sql: true
         format_sql: true
+        default_batch_fetch_size: 100
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/mgdb
 
 upload :
   dir : C:/DEV/upload
+#  dir : /upload
 
 logging:
   level:
