@@ -26,9 +26,9 @@ import java.util.Optional;
  * </pre>
  *
  * @author : ${user}
+ * @version : 0.1
  * @date : ${date} ${time}
  * @desc :
- * @version : 0.1
  */
 
 @Slf4j
@@ -68,4 +68,10 @@ public class MemberController {
         memberService.delete(id);
         return ResponseEntity.ok(new CommonResponse(id));
     }
+
+    @GetMapping("/api/members/leave/{id}")
+    public ResponseEntity<Long> leaveMember(@PathVariable Long id) {
+        return ResponseEntity.ok(memberService.leave(id));
+    }
+
 }

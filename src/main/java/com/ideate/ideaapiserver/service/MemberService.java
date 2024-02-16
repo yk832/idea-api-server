@@ -1,6 +1,7 @@
 package com.ideate.ideaapiserver.service;
 
 import com.ideate.ideaapiserver.config.constant.ErrorCode;
+import com.ideate.ideaapiserver.config.constant.MemberStatus;
 import com.ideate.ideaapiserver.dto.member.MemberDto;
 import com.ideate.ideaapiserver.dto.resource.ResourceDto;
 import com.ideate.ideaapiserver.entity.Member;
@@ -57,8 +58,7 @@ public class MemberService {
 
     @Transactional
     public void update(Long id, MultipartFile image, MemberDto.Update request) {
-        Member member = memberRepository.findById(id)
-                .orElseThrow(() -> new GlobalException(ErrorCode.NOT_FOUND_MEMBER));
+        Member member = findMemberById(id);
 
         if (Objects.isNull(image)) {
             member.update(request);
@@ -73,15 +73,25 @@ public class MemberService {
 
     @Transactional
     public void delete(Long id) {
-        Member member = memberRepository.findById(id)
-                .orElseThrow(() -> new GlobalException(ErrorCode.NOT_FOUND_MEMBER));
+        Member member = findMemberById(id);
 
         memberRepository.delete(member);
+    }
+
+    @Transactional
+    public Long leave(Long id) {
+        Member member = findMemberById(id);
+        member.updateStatus(MemberStatus.DELETED);
+        return member.getId();
+    }
+
+    private Member findMemberById(Long id) {
+        return memberRepository.findById(id)
+                .orElseThrow(() -> new GlobalException(ErrorCode.NOT_FOUND_MEMBER));
     }
 
     private Resource getResource(MultipartFile image) {
         ResourceDto resourceDto = resourceService.uploadImgFile(image);
         return Resource.create(resourceDto);
     }
-
 }
