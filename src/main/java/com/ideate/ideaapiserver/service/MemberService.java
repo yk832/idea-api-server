@@ -4,6 +4,7 @@ import com.ideate.ideaapiserver.config.constant.ErrorCode;
 import com.ideate.ideaapiserver.config.constant.MemberStatus;
 import com.ideate.ideaapiserver.dto.member.MemberDto;
 import com.ideate.ideaapiserver.dto.resource.ResourceDto;
+import com.ideate.ideaapiserver.dto.resource.ResourceInfo;
 import com.ideate.ideaapiserver.entity.Member;
 import com.ideate.ideaapiserver.entity.Resource;
 import com.ideate.ideaapiserver.handler.GlobalException;
@@ -95,7 +96,7 @@ public class MemberService {
     }
 
     private Resource getResource(MultipartFile image) {
-        ResourceDto resourceDto = resourceService.uploadImgFile(image);
-        return Resource.create(resourceDto);
+        ResourceInfo resourceInfo = resourceService.uploadImgFile(image);
+        return Resource.create(resourceInfo);
     }
 }

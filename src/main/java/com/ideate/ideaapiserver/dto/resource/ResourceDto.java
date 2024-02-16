@@ -12,18 +12,12 @@ public class ResourceDto {
 
     private Long id;
 
-    private String path;
-
-    private String originalName;
-
-    private String fakeName;
+    private ResourceInfo resourceInfo;
 
     public static ResourceDto of(Resource resource) {
         return ResourceDto.builder()
                 .id(resource.getId())
-                .path(resource.getPath())
-                .originalName(resource.getOriginalName())
-                .fakeName(resource.getFakeName())
+                .resourceInfo(resource.getResourceInfo())
             .build();
     }
 

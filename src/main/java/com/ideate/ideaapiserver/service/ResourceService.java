@@ -2,6 +2,7 @@ package com.ideate.ideaapiserver.service;
 
 import com.ideate.ideaapiserver.config.constant.ErrorCode;
 import com.ideate.ideaapiserver.dto.resource.ResourceDto;
+import com.ideate.ideaapiserver.dto.resource.ResourceInfo;
 import com.ideate.ideaapiserver.entity.Member;
 import com.ideate.ideaapiserver.entity.Resource;
 import com.ideate.ideaapiserver.handler.GlobalException;
@@ -45,8 +46,8 @@ public class ResourceService {
 
     @Transactional
     public Long save(MultipartFile image) {
-        ResourceDto resourceDto = uploadImgFile(image);
-        Resource saveResource = resourceRepository.save(Resource.create(resourceDto));
+        ResourceInfo resourceInfo = uploadImgFile(image);
+        Resource saveResource = resourceRepository.save(Resource.create(resourceInfo));
         return saveResource.getId();
     }
 
@@ -55,36 +56,32 @@ public class ResourceService {
         Resource resource = resourceRepository.findById(id)
                 .orElseThrow(()-> new GlobalException(ErrorCode.NOT_FOUND_RESOURCE));
 
-        deleteImgFile(resource.getPath() + resource.getFakeName() + resource.getOriginalName());
+        deleteImgFile(resource.getResourceInfo().getImgPath() + resource.getResourceInfo().getFakeImgName() + resource.getResourceInfo().getOriginalImgName());
 
-        ResourceDto resourceDto = uploadImgFile(image);
+        ResourceInfo resourceInfo = uploadImgFile(image);
 
-        resource.update(resourceDto);
+        resource.update(resourceInfo);
 
 
         return resource.getId();
     }
 
     @Transactional
-    public Long delete(Long id) {
+    public void delete(Long id) {
         Resource resource = resourceRepository.findById(id)
                 .orElseThrow(()-> new GlobalException(ErrorCode.NOT_FOUND_RESOURCE));
 
-        deleteImgFile(resource.getPath() + resource.getFakeName() + resource.getOriginalName());
+        deleteImgFile(resource.getResourceInfo().getImgPath() + resource.getResourceInfo().getFakeImgName() + resource.getResourceInfo().getOriginalImgName());
 
         Optional.ofNullable(resource.getMember())
                 .ifPresentOrElse(Member::deleteResource, ()-> resourceRepository.delete(resource));
-
-        return resource.getId();
     }
 
-    public ResourceDto uploadImgFile(MultipartFile file) {
+    public ResourceInfo uploadImgFile(MultipartFile file) {
         try {
             createDirectory(resourceProperties.getDir());
 
-            ResourceDto resourceDto = saveFile(file, resourceProperties.getUploadPath());
-
-            return resourceDto;
+            return saveFile(file, resourceProperties.getUploadPath());
         } catch (IOException e) {
             throw new GlobalException(e, ErrorCode.FILE_UPLOAD_FAIL);
         }
@@ -109,18 +106,18 @@ public class ResourceService {
         }
     }
 
-    private ResourceDto saveFile(MultipartFile file, String uploadPath) throws IOException {
+    private ResourceInfo saveFile(MultipartFile file, String uploadPath) throws IOException {
         String uuid = GlobalUtils.makeUUID(16);
         String fullPath = uploadPath + uuid + file.getOriginalFilename();
 
         Path path = Paths.get(fullPath);
         Files.write(path, file.getBytes());
 
-        return ResourceDto.builder()
-                .fakeName(uuid)
-                .originalName(file.getOriginalFilename())
-                .path(uploadPath)
-                .build();
+        return ResourceInfo.builder()
+                .fakeImgName(uuid)
+                .originalImgName(file.getOriginalFilename())
+                .imgPath(uploadPath)
+            .build();
     }
 
 }

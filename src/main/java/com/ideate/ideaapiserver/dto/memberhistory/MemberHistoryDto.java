@@ -1,6 +1,7 @@
 package com.ideate.ideaapiserver.dto.memberhistory;
 
 import com.ideate.ideaapiserver.config.constant.HistoryType;
+import com.ideate.ideaapiserver.dto.resource.ResourceInfo;
 import com.ideate.ideaapiserver.entity.MemberHistory;
 import lombok.*;
 
@@ -19,12 +20,7 @@ public class MemberHistoryDto {
 
     private String mdn;
 
-    // TODO image 관련 필드 @Embedded 변경하기 (Resource entity)
-    private String imgPath;
-
-    private String fakeImgName;
-
-    private String originalImgName;
+    private ResourceInfo resourceInfo;
 
     private HistoryType historyType;
 
@@ -35,9 +31,7 @@ public class MemberHistoryDto {
                 .password(history.getPassword())
                 .name(history.getName())
                 .mdn(history.getMdn())
-                .imgPath(history.getImgPath())
-                .fakeImgName(history.getFakeImgName())
-                .originalImgName(history.getOriginalImgName())
+                .resourceInfo(history.getResourceInfo())
                 .historyType(history.getHistoryType())
             .build();
     }

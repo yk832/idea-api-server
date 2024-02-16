@@ -2,6 +2,7 @@ package com.ideate.ideaapiserver.entity;
 
 
 import com.ideate.ideaapiserver.dto.resource.ResourceDto;
+import com.ideate.ideaapiserver.dto.resource.ResourceInfo;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,27 +20,20 @@ public class Resource {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String path;
-
-    private String originalName;
-
-    private String fakeName;
+    @Embedded
+    ResourceInfo resourceInfo;
 
     @OneToOne(mappedBy = "resource", fetch = FetchType.LAZY)
     private Member member;
 
-    public static Resource create(ResourceDto dto) {
+    public static Resource create(ResourceInfo resourceInfo) {
         return Resource.builder()
-                .path(dto.getPath())
-                .originalName(dto.getOriginalName())
-                .fakeName(dto.getFakeName())
+                .resourceInfo(resourceInfo)
             .build();
     }
 
-    public void update(ResourceDto dto) {
-        this.path = dto.getPath();
-        this.originalName = dto.getOriginalName();
-        this.fakeName = dto.getFakeName();
+    public void update(ResourceInfo resourceInfo) {
+        this.resourceInfo = resourceInfo;
     }
 }
 
