@@ -42,7 +42,8 @@ public class LoginService {
         memberHistoryRepository.save(MemberHistory.create(member, HistoryType.LOGIN));
 
         Long count = memberHistoryRepository.getLoginSuccessCount(member.getUid(), HistoryType.LOGIN);
-        if (count >= 10) {
+
+        if (count >= 10 && member.getMemberStatus().equals(MemberStatus.NORMAL)) {
             member.updateStatus(MemberStatus.VIP);
         }
 
