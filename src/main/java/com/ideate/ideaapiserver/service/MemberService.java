@@ -30,6 +30,10 @@ public class MemberService {
 
     @Transactional
     public Long create(MultipartFile image, MemberDto.Create request) {
+        if (memberRepository.findByUid(request.getUid()).isPresent()) {
+            throw new GlobalException(ErrorCode.REGISTERED_UID);
+        }
+
         Member member = Member.create(request);
 
         if (Objects.isNull(image)) {

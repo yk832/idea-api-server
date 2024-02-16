@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum ErrorCode {
+    REGISTERED_UID(200, "이미 등록된 아이디"),
     NOT_FOUND(404,"PAGE NOT FOUND"),
     NOT_FOUND_MEMBER(204,"존재하지 않는 고객"),
     NOT_FOUND_RESOURCE(204, "존재하지 않는 이미지 리소스"),
