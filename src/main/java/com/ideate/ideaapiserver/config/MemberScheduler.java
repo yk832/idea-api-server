@@ -22,12 +22,13 @@ import java.util.stream.Collectors;
 public class MemberScheduler {
 
     private final MemberRepository memberRepository;
+
     private final MemberHistoryRepository memberHistoryRepository;
     private static final Set<MemberStatus> MEMBER_STATUSES = Collections.unmodifiableSet(EnumSet.of(MemberStatus.NORMAL, MemberStatus.VIP));
 
     @Transactional
-    @Scheduled(fixedDelay = 40000)
-//    @Scheduled(cron = "0 0 0 * * *")
+//    @Scheduled(fixedDelay = 40000)
+    @Scheduled(cron = "0 0 0 * * *")
     public void updateMemberStatus() {
         List<String> updateMembers = memberHistoryRepository.findByLoginHistoryType().stream()
                 .filter(m -> isThreeDaysPassed(m.getCreatedAt(), LocalDateTime.now()))
@@ -37,15 +38,15 @@ public class MemberScheduler {
 
         if(!updateMembers.isEmpty()) {
             memberRepository.findByUidIn(updateMembers).stream()
+                    .filter(m -> MEMBER_STATUSES.contains(m.getMemberStatus()))
                     .forEach(member -> member.updateStatus(MemberStatus.INACTIVE));
         }
     }
 
     @Transactional
-    @Scheduled(fixedDelay = 60000)
-//    @Scheduled(cron = "0 0 0 * * *")
+//    @Scheduled(fixedDelay = 60000)
+    @Scheduled(cron = "0 0 0 * * *")
     public void deleteMember() {
-        // TODO 회원탈퇴 API 추가하기 ( 회원상태 변경 및 히스토리 추가 )
         List<String> deleteMembers = memberHistoryRepository.findByUpdateHistoryType().stream()
                 .filter(m -> isThreeDaysPassed(m.getCreatedAt(), LocalDateTime.now()))
                 .filter(m -> m.getMemberStatus().equals(MemberStatus.DELETED))
@@ -56,12 +57,11 @@ public class MemberScheduler {
             memberRepository.deleteByUidIn(deleteMembers);
         }
 
-
     }
 
     public boolean isThreeDaysPassed(LocalDateTime databaseDateTime, LocalDateTime currentDateTime) {
         long daysDifference = ChronoUnit.DAYS.between(databaseDateTime, currentDateTime);
-        return daysDifference == 0;
+        return daysDifference == 3;
     }
 
 }
