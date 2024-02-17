@@ -1,5 +1,6 @@
 package com.ideate.ideaapiserver.repository;
 
+import com.ideate.ideaapiserver.config.constant.MemberStatus;
 import com.ideate.ideaapiserver.entity.LoginHistory;
 import com.ideate.ideaapiserver.entity.MemberStatusHistory;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -12,5 +13,7 @@ public interface MemberStatusRepository extends MongoRepository<MemberStatusHist
     Optional<MemberStatusHistory> findByUid(String uid);
 
     List<MemberStatusHistory> findMemberStatusHistoriesByLastLoginDateLessThanEqual(LocalDateTime day);
+
+    List<MemberStatusHistory> findMemberStatusHistoriesByMemberStatus(MemberStatus status);
 
 }
