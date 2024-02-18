@@ -1,0 +1,44 @@
+version: "0.1"
+
+services:
+  compose-postgres :
+    container_name: compose-postgres
+    image: postgres:latest
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB : idea
+      POSTGRES_USER : postgres
+      POSTGRES_PASSWORD : postgres
+
+  compose-mongo:
+    container_name: compose-mongo
+    image: mongo:4.2
+    restart: always
+    ports:
+      - 27017:27017
+
+
+  application :
+    platform: linux/amd64
+    container_name: idea-api
+    build:
+      context: .
+      platforms:
+        - "linux/amd64"
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://compose-postgres:5432/idea
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_DATA_MONGODB_URI : mongodb://compose-mongo:27017/idea
+      SPRING_PROFILES_ACTIVE: dev
+    links:
+      - compose-postgres
+      - compose-mongo
+    depends_on:
+      - compose-postgres
+      - compose-mongo
