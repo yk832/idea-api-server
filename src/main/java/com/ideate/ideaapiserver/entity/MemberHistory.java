@@ -29,33 +29,19 @@ public class MemberHistory extends BaseTimeEntity {
 
     private String name;
 
-    private String nickname;
-
-    private String birthday;
-
     private String mdn;
 
     @Embedded
     ResourceInfo resourceInfo;
 
-    @Enumerated(EnumType.STRING)
-    private HistoryType historyType;
-
-    @Enumerated(EnumType.STRING)
-    private MemberStatus memberStatus;
-
-    public static MemberHistory create(Member member, HistoryType historyType) {
+    public static MemberHistory create(Member member) {
         Resource resource = member.getResource();
         return MemberHistory.builder()
                 .uid(member.getUid())
                 .password(member.getPassword())
                 .name(member.getName())
-                .nickname(member.getNickname())
-                .birthday(member.getBirthday())
                 .mdn(member.getMdn())
                 .resourceInfo(Objects.nonNull(resource) ? resource.getResourceInfo() : null)
-                .historyType(historyType)
-                .memberStatus(member.getMemberStatus())
             .build();
     }
 }

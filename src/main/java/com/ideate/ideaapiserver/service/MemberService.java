@@ -6,9 +6,11 @@ import com.ideate.ideaapiserver.dto.member.MemberDto;
 import com.ideate.ideaapiserver.dto.resource.ResourceDto;
 import com.ideate.ideaapiserver.dto.resource.ResourceInfo;
 import com.ideate.ideaapiserver.entity.Member;
+import com.ideate.ideaapiserver.entity.MemberStatusHistory;
 import com.ideate.ideaapiserver.entity.Resource;
 import com.ideate.ideaapiserver.handler.GlobalException;
 import com.ideate.ideaapiserver.repository.MemberRepository;
+import com.ideate.ideaapiserver.repository.MemberStatusRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 
 @Slf4j
@@ -28,6 +31,9 @@ public class MemberService {
     private final ResourceService resourceService;
 
     private final MemberRepository memberRepository;
+
+    private final MemberStatusRepository memberStatusRepository;
+
 
     @Transactional
     public Long create(MultipartFile image, MemberDto.Create request) {
@@ -86,7 +92,12 @@ public class MemberService {
     @Transactional
     public Long leave(Long id) {
         Member member = findMemberById(id);
-        member.updateStatus(MemberStatus.DELETED);
+
+        memberStatusRepository.findByUid(member.getUid()).ifPresent(m -> {
+            m.updateStatus(MemberStatus.DELETED);
+            memberStatusRepository.save(m);
+        });
+
         return member.getId();
     }
 

@@ -33,7 +33,7 @@ public class MemberStatusHistory {
         return MemberStatusHistory.builder()
                 .uid(member.getUid())
                 .loginCount(1L)
-                .memberStatus(member.getMemberStatus())
+                .memberStatus(MemberStatus.NORMAL)
                 .firstLoginDate(LocalDateTime.now())
                 .lastLoginDate(LocalDateTime.now())
             .build();
@@ -43,7 +43,7 @@ public class MemberStatusHistory {
         return MemberStatusHistory.builder()
                 .uid(member.getUid())
                 .loginCount(loginCount)
-                .memberStatus(member.getMemberStatus())
+                .memberStatus(MemberStatus.NORMAL)
                 .lastLoginDate(LocalDateTime.now())
             .build();
     }
@@ -52,7 +52,8 @@ public class MemberStatusHistory {
         this.memberStatus = memberStatus;
     }
 
-    public void incrementLoginCount(Long loginCount) {
+    public Long incrementLoginCount(Long loginCount) {
         this.loginCount = loginCount;
+        return loginCount;
     }
 }

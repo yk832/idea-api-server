@@ -32,10 +32,11 @@ public class LoginService {
     @Transactional
     public Long login(LoginRequest request) {
         Member member = memberRepository.findByUid(request.getUid())
-                .map(m -> validateMemberStatus(request.getPassword(), m))
                 .orElseThrow(() -> new LoginFailException(ErrorCode.NOT_FOUND_MEMBER));
 
-        loginHistoryRepository.save(LoginHistory.create(member));
+        if (!SHA256.validatePassword(request.getPassword(), member.getPassword())) {
+            throw new LoginFailException(ErrorCode.PASSWORD_NOT_MATCH);
+        }
 
         Optional<MemberStatusHistory> findMemberStatusHistory = memberStatusRepository.findByUid(member.getUid());
         if (findMemberStatusHistory.isEmpty()) {
@@ -44,30 +45,28 @@ public class LoginService {
         }
 
         MemberStatusHistory statusHistory = findMemberStatusHistory.get();
-        statusHistory.incrementLoginCount(statusHistory.getLoginCount() + 1);
 
-        if(statusHistory.getLoginCount() == 10) {
-            member.updateStatus(MemberStatus.VIP);
+        // 삭제된 고객, 휴면 고객 검증
+        validateMemberStatus(statusHistory.getMemberStatus());
+
+        Long updateLoginCount = statusHistory.incrementLoginCount(statusHistory.getLoginCount() + 1);
+        if(updateLoginCount == 10) {
             statusHistory.updateStatus(MemberStatus.VIP);
         }
+
+        loginHistoryRepository.save(LoginHistory.create(member));
 
         memberStatusRepository.save(statusHistory);
 
         return member.getId();
     }
 
-    private Member validateMemberStatus(String requestPassword, Member member) {
-        if (!SHA256.validatePassword(requestPassword, member.getPassword())) {
-            throw new LoginFailException(ErrorCode.PASSWORD_NOT_MATCH);
-        }
-
-        if (member.getMemberStatus().equals(MemberStatus.DELETED)) {
+    private void validateMemberStatus(MemberStatus memberStatus) {
+        if (memberStatus.equals(MemberStatus.DELETED)) {
             throw new LoginFailException(ErrorCode.NOT_FOUND_MEMBER);
-        } else if (member.getMemberStatus().equals(MemberStatus.INACTIVE)) {
+        } else if (memberStatus.equals(MemberStatus.INACTIVE)) {
             throw new LoginFailException(ErrorCode.DISABLED_MEMBER);
         }
-
-        return member;
     }
 
 }

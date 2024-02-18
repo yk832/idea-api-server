@@ -20,17 +20,17 @@ public class MemberEntityListener {
     @PreUpdate
     @PrePersist
     public void prePersistAndUpdate(final Member member) {
-        saveMemberHistory(member, member.getId() == null ? HistoryType.CREATE : HistoryType.UPDATE);
+        saveMemberHistory(member);
     }
 
     @PreRemove
     public void delete(final Member member) {
-        saveMemberHistory(member, HistoryType.DELETE);
+//        saveMemberHistory(member, HistoryType.DELETE);
     }
 
-    private static void saveMemberHistory(Member member, HistoryType historyType) {
+    private static void saveMemberHistory(Member member) {
         MemberHistoryRepository memberHistoryRepository = BeanUtil.getBean(MemberHistoryRepository.class);
-        MemberHistory memberHistory = MemberHistory.create(member, historyType);
+        MemberHistory memberHistory = MemberHistory.create(member);
         memberHistoryRepository.save(memberHistory);
     }
 

@@ -39,9 +39,6 @@ public class Member {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
     private Resource resource;
 
-    @Enumerated(EnumType.STRING)
-    private MemberStatus memberStatus;
-
     public static Member create(MemberDto.Create request, Resource resource) {
         return Member.builder()
                 .uid(request.getUid())
@@ -51,7 +48,6 @@ public class Member {
                 .birthday(request.getBirthday())
                 .mdn(request.getMdn())
                 .resource(resource)
-                .memberStatus(MemberStatus.NORMAL)
             .build();
     }
 
@@ -63,7 +59,6 @@ public class Member {
                 .nickname(setNickname(request))
                 .birthday(request.getBirthday())
                 .mdn(request.getMdn())
-                .memberStatus(MemberStatus.NORMAL)
             .build();
     }
 
@@ -81,10 +76,6 @@ public class Member {
 
     public void deleteResource() {
         this.resource = null;
-    }
-
-    public void updateStatus(MemberStatus status) {
-        this.memberStatus = status;
     }
 
     private static String setNickname(MemberDto.Create request) {
