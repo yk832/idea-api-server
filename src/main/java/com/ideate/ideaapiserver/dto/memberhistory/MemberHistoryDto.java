@@ -14,6 +14,8 @@ public class MemberHistoryDto {
 
     private Long id;
 
+    private String uid;
+
     private String password;
 
     private String name;
@@ -22,17 +24,18 @@ public class MemberHistoryDto {
 
     private ResourceInfo resourceInfo;
 
-    private HistoryType historyType;
+//    private HistoryType historyType;
 
 
     public static MemberHistoryDto of(MemberHistory history) {
         return MemberHistoryDto.builder()
                 .id(history.getId())
+                .uid(history.getUid())
                 .password(history.getPassword())
                 .name(history.getName())
                 .mdn(history.getMdn())
                 .resourceInfo(history.getResourceInfo())
-                .historyType(history.getHistoryType())
+//                .historyType(history.getHistoryType())
             .build();
     }
 }

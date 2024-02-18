@@ -34,9 +34,9 @@ public class MemberHistoryController {
         return ResponseEntity.ok(memberHistoryService.findAll());
     }
 
-    @GetMapping("/api/histories/member/{id}")
-    public ResponseEntity<MemberHistoryDto> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(memberHistoryService.findById(id));
+    @GetMapping("/api/histories/member/{uid}")
+    public ResponseEntity<List<MemberHistoryDto>> findById(@PathVariable Long uid) {
+        return ResponseEntity.ok(memberHistoryService.findById(uid));
     }
 
 }
