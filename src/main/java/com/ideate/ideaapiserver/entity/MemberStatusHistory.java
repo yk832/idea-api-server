@@ -54,6 +54,8 @@ public class MemberStatusHistory {
 
     public Long incrementLoginCount(Long loginCount) {
         this.loginCount = loginCount;
+        this.lastLoginDate = LocalDateTime.now();
         return loginCount;
     }
+    
 }
